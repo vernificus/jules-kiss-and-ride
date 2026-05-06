@@ -1,3 +1,7 @@
+databases:
+  - name: school-rider-db
+    plan: free
+
 services:
   - type: web
     name: car-rider-app
@@ -9,9 +13,10 @@ services:
       - key: NODE_VERSION
         value: 20
       - key: DATABASE_URL
-        generateValue: true
+        fromDatabase:
+          name: school-rider-db
+          property: connectionString
       - key: NEXTAUTH_SECRET
         generateValue: true
       - key: NEXTAUTH_URL
-        # Ensure Render replaces this correctly, or simply rely on VERCEL_URL equivalent if needed, but it's best set manually in the Render dashboard if testing locally. Setting dynamic placeholder.
-        value: https://your-render-url.onrender.com
+        sync: false   # set manually in the Render dashboard to your live URL
