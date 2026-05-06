@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: car-rider-app
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma generate && npx prisma db push && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DATABASE_URL
+        generateValue: true
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+      - key: NEXTAUTH_URL
+        # Ensure Render replaces this correctly, or simply rely on VERCEL_URL equivalent if needed, but it's best set manually in the Render dashboard if testing locally. Setting dynamic placeholder.
+        value: https://your-render-url.onrender.com
