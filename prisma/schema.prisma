@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      String   @default("TEACHER") // Roles: ADMIN, STAFF, TEACHER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id        String   @id @default(cuid())
+  name      String
+  grade     String   // Prek, K, 1, 2, 3, 4, 5
+  teacher   String
+  carNumber Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model QueueEntry {
+  id        String   @id @default(cuid())
+  carNumber Int
+  status    String   @default("WAITING") // WAITING, DISMISSED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
